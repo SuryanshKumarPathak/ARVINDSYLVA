@@ -13,7 +13,7 @@ const NAV_LINKS = [
 export default function Header({ onCTAClick }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919999999999';
+  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919606010736';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);

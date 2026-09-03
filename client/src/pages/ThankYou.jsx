@@ -1,8 +1,8 @@
 import { CheckCircle2, Phone, MessageCircle, Home } from 'lucide-react';
 
 export default function ThankYou() {
-  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919999999999';
-  const wa = import.meta.env.VITE_CONTACT_WHATSAPP || '919999999999';
+  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919606010736';
+  const wa = import.meta.env.VITE_CONTACT_WHATSAPP || '919606010736';
 
   return (
     <div className="min-h-screen bg-cream-50 flex flex-col">

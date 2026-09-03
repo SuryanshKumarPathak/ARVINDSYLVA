@@ -12,6 +12,7 @@
     "seed:admin": "node scripts/seed.admin.js"
   },
   "dependencies": {
+    "arvind-sylva": "file:..",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

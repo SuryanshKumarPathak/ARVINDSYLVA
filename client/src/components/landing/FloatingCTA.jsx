@@ -2,8 +2,8 @@ import { Phone, MessageCircle, ChevronUp } from 'lucide-react';
 import { trackPhoneClick, trackWhatsAppClick, trackSiteVisitCTA } from '../../utils/tracking';
 
 export default function FloatingCTA({ onCTAClick }) {
-  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919999999999';
-  const wa = import.meta.env.VITE_CONTACT_WHATSAPP || '919999999999';
+  const phone = import.meta.env.VITE_CONTACT_PHONE || '+919606010736';
+  const wa = import.meta.env.VITE_CONTACT_WHATSAPP || '919606010736';
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
