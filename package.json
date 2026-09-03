@@ -14,6 +14,9 @@
     "test": "npm test --prefix server",
     "lint": "npm run lint --prefix client && npm run lint --prefix server"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }

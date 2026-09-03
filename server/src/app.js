@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const helmet = require('helmet');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -19,6 +21,8 @@ const adminRoutes = require('./routes/admin.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
 
 const app = express();
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+const clientIndexPath = path.join(clientDistPath, 'index.html');
 
 // ─── Security ────────────────────────────────────────────────────────────────
 app.use(helmet({
@@ -60,11 +64,25 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ success: true, message: 'Server is healthy' });
+});
+
 // ─── Routes ───────────────────────────────────────────────────────────────────
 app.use('/api/auth', loginLimiter, authRoutes);
-app.use('/api/leads', leadRoutes);
+app.use('/api/leads', leadLimiter, leadRoutes);
 app.use('/api/admins', adminRoutes);
 app.use('/api/analytics', analyticsRoutes);
+
+// ─── Production Frontend Serving ─────────────────────────────────────────────
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath, { index: false }));
+
+  app.get(/^\/(?!api).*/, (req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    return res.sendFile(clientIndexPath);
+  });
+}
 
 // ─── Error Handling ───────────────────────────────────────────────────────────
 app.use(notFound);
