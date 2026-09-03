@@ -24,17 +24,21 @@ const generalLimiter = createLimiter({
 
 // Aggressive limiter for lead submission
 const leadLimiter = createLimiter({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX_LEADS) || 5,
-  message: 'Too many submissions. Please try again in a few minutes.',
+  windowMs: process.env.NODE_ENV === 'development' ? 60 * 1000 : (parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000),
+  max: process.env.NODE_ENV === 'development' ? 1000 : (parseInt(process.env.RATE_LIMIT_MAX_LEADS) || 5),
+  message: process.env.NODE_ENV === 'development'
+    ? 'Development mode: lead submission temporarily unrestricted.'
+    : 'Too many submissions. Please try again in a few minutes.',
   keyGenerator: (req) => req.ip,
 });
 
 // Login limiter
 const loginLimiter = createLimiter({
-  windowMs: 15 * 60 * 1000,
-  max: parseInt(process.env.RATE_LIMIT_MAX_LOGIN) || 10,
-  message: 'Too many login attempts. Please try again after 15 minutes.',
+  windowMs: process.env.NODE_ENV === 'development' ? 60 * 1000 : 15 * 60 * 1000,
+  max: process.env.NODE_ENV === 'development' ? 100 : (parseInt(process.env.RATE_LIMIT_MAX_LOGIN) || 10),
+  message: process.env.NODE_ENV === 'development'
+    ? 'Development mode: too many login attempts. Wait a moment and retry.'
+    : 'Too many login attempts. Please try again after 15 minutes.',
   skipSuccessfulRequests: true,
 });
 
